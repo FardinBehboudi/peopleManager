@@ -1,5 +1,7 @@
 package com.assecor.showcase.peoplemanager.model;
 
+import java.util.logging.Logger;
+
 public enum Color {
     BLUE(1),
     GREEN(2),
@@ -9,7 +11,21 @@ public enum Color {
     TURQUOIS(6),
     WHITE(7);
 
+    private static final Logger logger = Logger.getLogger(Color.class.getName());
+    private int colorNumber;
 
     Color(int colorNumber) {
+        this.colorNumber = colorNumber;
+    }
+
+    public static Color fromColorNumber(int colorNumber) {
+        for (Color color : Color.values()) {
+            if (color.colorNumber == colorNumber) {
+                return color;
+            }
+        }
+        String errorMessage = String.format("Color Number %d is not defined", colorNumber);
+        logger.warning(errorMessage);
+        throw new IllegalArgumentException(errorMessage);
     }
 }

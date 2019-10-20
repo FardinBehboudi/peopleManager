@@ -6,7 +6,7 @@ public class PersonEntity {
     private String name;
     private String lastname;
     private String zipcode;
-    private  String city;
+    private String city;
     private Color color;
 
 
