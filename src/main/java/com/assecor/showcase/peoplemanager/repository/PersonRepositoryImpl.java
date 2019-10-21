@@ -9,11 +9,16 @@ import org.springframework.stereotype.Repository;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class PersonRepositoryImpl implements PersonRepository {
 
     private List<PersonEntity> personEntities;
+    private static final Logger logger = Logger.getLogger(Color.class.getName());
+
 
     @Override
     public void readAll() throws FileNotFoundException, IOException {
@@ -35,7 +40,7 @@ public class PersonRepositoryImpl implements PersonRepository {
             String city = fields[2].substring(fields[2].indexOf(" ") + 1);
             Integer colorNumber = Integer.valueOf(fields[3].trim());
 
-            PersonEntity personEntity = new PersonEntity(linenumber,lastname, name, zipcode,city, Color.fromColorNumber(colorNumber));
+            PersonEntity personEntity = new PersonEntity(linenumber, name, lastname, zipcode,city, Color.fromColorNumber(colorNumber));
             personEntities.add(personEntity);
         }
         bufferedReader.close();
@@ -46,4 +51,74 @@ public class PersonRepositoryImpl implements PersonRepository {
     public List<PersonEntity> findAll() {
         return personEntities;
     }
+
+    @Override
+    public PersonEntity findPerson(int id) {
+        for(PersonEntity personEntity : personEntities ){
+            if(personEntity.getId() == id){
+                return personEntity;
+            }
+        }
+        String errorMessage = String.format("person with id %d is not defined", id);
+        logger.warning(errorMessage);
+        throw new IllegalArgumentException(errorMessage);
+
+    }
+
+    @Override
+    public List<PersonEntity> findPersonByColor(String colorName) {
+        List<PersonEntity> personEntityList = new ArrayList<>();
+        Color color = Color.valueOf(colorName.toUpperCase());
+        for(PersonEntity personEntity: personEntities){
+            if(personEntity.getColor() == color){
+                personEntityList.add(personEntity);
+
+            }
+        }
+        return personEntityList;
+
+    }
+
+    @Override
+    public void add(PersonEntity personEntity)  {
+        int id = personEntities.size()+1;
+        personEntity.setId(id);
+
+        try {
+            persistEntity(personEntity);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+        personEntities.add(personEntity);
+
+    }
+
+    private void persistEntity(PersonEntity personEntity) throws FileNotFoundException, IOException{
+
+            ClassLoader classLoader = getClass().getClassLoader();
+            File file = new File(classLoader.getResource("persondata.csv").getPath());
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file,true));
+        try{
+            bufferedWriter.append("\n");
+            bufferedWriter.append(personEntity.getLastname());
+            bufferedWriter.append(", ");
+            System.out.println(personEntity.getLastname()); //test
+            bufferedWriter.append(personEntity.getName());
+            bufferedWriter.append(", ");
+            bufferedWriter.append(personEntity.getZipcode()).append(" ").append(personEntity.getCity());
+            bufferedWriter.append(", ");
+            bufferedWriter.append(String.valueOf(Color.fromColorName(personEntity.getColor().name())));
+            bufferedWriter.flush();
+            bufferedWriter.close();
+        }catch(IOException ioe){
+            System.out.println("Exception occurred:");
+            ioe.printStackTrace();
+        } finally {
+            bufferedWriter.close();
+
+        }
+    }
+
 }

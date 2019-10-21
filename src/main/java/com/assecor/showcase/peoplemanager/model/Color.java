@@ -28,4 +28,15 @@ public enum Color {
         logger.warning(errorMessage);
         throw new IllegalArgumentException(errorMessage);
     }
+
+    public static int fromColorName(String colorName) {
+        for (Color color : Color.values()) {
+            if (color.name().equals(colorName)) {
+                return color.colorNumber;
+            }
+        }
+        String errorMessage = String.format("Color Number %s is not defined", colorName);
+        logger.warning(errorMessage);
+        throw new IllegalArgumentException(errorMessage);
+    }
 }

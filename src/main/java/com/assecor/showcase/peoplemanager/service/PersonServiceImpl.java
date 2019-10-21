@@ -16,7 +16,21 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<PersonEntity> findAll() {
-
         return personRepository.findAll();
     }
+
+    @Override
+    public PersonEntity findPerson(int id) {
+        return personRepository.findPerson(id);
+    }
+
+    @Override
+    public List<PersonEntity> findPersonByColor(String color) {
+        return personRepository.findPersonByColor(color);
+    }
+
+    @Override
+    public void add(PersonEntity personEntity)  {  personRepository.add(personEntity);}
+
+
 }
