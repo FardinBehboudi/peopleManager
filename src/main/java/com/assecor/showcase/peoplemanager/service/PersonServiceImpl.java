@@ -1,5 +1,8 @@
 package com.assecor.showcase.peoplemanager.service;
 
+import com.assecor.showcase.peoplemanager.exception.ColorNotFoundException;
+import com.assecor.showcase.peoplemanager.exception.PersonNotFoundException;
+import com.assecor.showcase.peoplemanager.model.Color;
 import com.assecor.showcase.peoplemanager.model.PersonEntity;
 import com.assecor.showcase.peoplemanager.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +23,25 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonEntity findPerson(int id) {
-        return personRepository.findPerson(id);
+    public PersonEntity findPerson(int id) throws PersonNotFoundException {
+        try {
+            return personRepository.findPerson(id);
+        }
+        catch (IllegalArgumentException ex){
+            throw new PersonNotFoundException(ex.getCause());
+
+        }
     }
 
     @Override
-    public List<PersonEntity> findPersonByColor(String color) {
-        return personRepository.findPersonByColor(color);
+    public List<PersonEntity> findPersonByColor(String color) throws ColorNotFoundException {
+        try {
+            return personRepository.findPersonByColor(color);
+        }
+        catch (IllegalArgumentException ex){
+            throw new ColorNotFoundException(ex.getCause());
+
+        }
     }
 
     @Override

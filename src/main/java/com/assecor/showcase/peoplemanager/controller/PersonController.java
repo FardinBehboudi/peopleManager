@@ -1,13 +1,15 @@
 package com.assecor.showcase.peoplemanager.controller;
 
+import com.assecor.showcase.peoplemanager.exception.ColorNotFoundException;
+import com.assecor.showcase.peoplemanager.exception.PersonNotFoundException;
 import com.assecor.showcase.peoplemanager.model.PersonEntity;
 import com.assecor.showcase.peoplemanager.service.PersonService;
+import org.omg.CORBA.ObjectHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import sun.management.snmp.jvminstr.JvmOSImpl;
 
 import java.util.List;
@@ -25,20 +27,27 @@ public class PersonController {
     }
 
     @GetMapping("/persons/{id}")
-    public PersonEntity getPerson(@PathVariable("id") int id){
-
-        return personService.findPerson(id);
+    public ResponseEntity<Object> getPerson(@PathVariable("id") int id) throws PersonNotFoundException {
+        try {
+            return new ResponseEntity<>(personService.findPerson(id),HttpStatus.OK);
+        } catch(PersonNotFoundException ex){
+            return new ResponseEntity<>("Person Not Found",HttpStatus.NOT_FOUND);
+        }
     }
 
-
     @GetMapping("/persons/color/{color}")
-    public List<PersonEntity> getPersonByColor(@PathVariable("color") String color){
+    public ResponseEntity<Object> getPersonByColor(@PathVariable("color") String color) throws ColorNotFoundException{
+        try {
+            return new ResponseEntity<>(personService.findPersonByColor(color),HttpStatus.OK);
+        } catch(ColorNotFoundException ex){
+            return new ResponseEntity<>("Color Not Found",HttpStatus.NOT_FOUND);
+        }
 
-        return personService.findPersonByColor(color);
     }
 
 
     @PostMapping("/persons")
+    @ResponseStatus(code = HttpStatus.CREATED)
     public ResponseEntity<Void> addPerson(PersonEntity personEntity) {
          personService.add(personEntity);
          return ResponseEntity.noContent().build();

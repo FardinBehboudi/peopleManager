@@ -1,7 +1,6 @@
 package com.assecor.showcase.peoplemanager.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import com.assecor.showcase.peoplemanager.IntegrationBaseTests;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +10,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+
+
 @AutoConfigureMockMvc
-public class PersonControllerTest {
+public class PersonControllerTest extends IntegrationBaseTests {
 
     @Autowired
     private WebApplicationContext context;

@@ -69,13 +69,19 @@ public class PersonRepositoryImpl implements PersonRepository {
     public List<PersonEntity> findPersonByColor(String colorName) {
         List<PersonEntity> personEntityList = new ArrayList<>();
         Color color = Color.valueOf(colorName.toUpperCase());
-        for(PersonEntity personEntity: personEntities){
-            if(personEntity.getColor() == color){
-                personEntityList.add(personEntity);
-
+        try {
+            for (PersonEntity personEntity : personEntities) {
+                if (personEntity.getColor() == color) {
+                    personEntityList.add(personEntity);
+                }
             }
+            return personEntityList;
+        } catch (IllegalArgumentException ex){
+            String errorMessage = String.format("person with id %s is not defined", colorName);
+            logger.warning(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
         }
-        return personEntityList;
+
 
     }
 

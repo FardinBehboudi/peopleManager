@@ -1,6 +1,5 @@
 package com.assecor.showcase.peoplemanager.repository;
 
-import com.assecor.showcase.peoplemanager.model.Color;
 import com.assecor.showcase.peoplemanager.model.PersonEntity;
 
 import java.io.FileNotFoundException;
