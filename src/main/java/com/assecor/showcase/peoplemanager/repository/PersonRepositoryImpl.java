@@ -104,7 +104,6 @@ public class PersonRepositoryImpl implements PersonRepository {
             bufferedWriter.append("\n");
             bufferedWriter.append(personEntity.getLastname());
             bufferedWriter.append(", ");
-            System.out.println(personEntity.getLastname()); //test
             bufferedWriter.append(personEntity.getName());
             bufferedWriter.append(", ");
             bufferedWriter.append(personEntity.getZipcode()).append(" ").append(personEntity.getCity());

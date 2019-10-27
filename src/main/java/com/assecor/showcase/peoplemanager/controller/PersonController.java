@@ -3,10 +3,12 @@ package com.assecor.showcase.peoplemanager.controller;
 import com.assecor.showcase.peoplemanager.model.PersonEntity;
 import com.assecor.showcase.peoplemanager.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sun.management.snmp.jvminstr.JvmOSImpl;
 
 import java.util.List;
 
@@ -37,8 +39,10 @@ public class PersonController {
 
 
     @PostMapping("/persons")
-    public void addPerson(PersonEntity personEntity) {
+    public ResponseEntity<Void> addPerson(PersonEntity personEntity) {
          personService.add(personEntity);
+         return ResponseEntity.noContent().build();
+
     }
 
 
