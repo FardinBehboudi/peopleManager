@@ -6,6 +6,7 @@ import com.assecor.showcase.peoplemanager.model.Color;
 import com.assecor.showcase.peoplemanager.model.PersonEntity;
 import com.assecor.showcase.peoplemanager.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 public class PersonServiceImpl implements PersonService {
 
     @Autowired
+    @Qualifier(value = "personFileRepository")
     private PersonRepository personRepository;
 
     @Override

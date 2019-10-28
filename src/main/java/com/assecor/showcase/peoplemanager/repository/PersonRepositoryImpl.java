@@ -3,6 +3,7 @@ package com.assecor.showcase.peoplemanager.repository;
 
 import com.assecor.showcase.peoplemanager.model.Color;
 import com.assecor.showcase.peoplemanager.model.PersonEntity;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +14,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Component
+@Component(value = "personFileRepository")
+@Primary
 public class PersonRepositoryImpl implements PersonRepository {
 
     private List<PersonEntity> personEntities;
@@ -24,13 +26,21 @@ public class PersonRepositoryImpl implements PersonRepository {
     public void readAll() throws FileNotFoundException, IOException {
         personEntities = new ArrayList<>();
 
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("persondata.csv").getFile());
+        //gets project directory
+        String projectPath = System.getProperty("user.dir");
+        int lastSlash = projectPath.lastIndexOf('\\');
+        String filePath= projectPath.substring(0,lastSlash+1);
+        //open files from project directory
+        File file = new File(filePath + "persondata.csv");
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+
+//        ClassLoader classLoader = getClass().getClassLoader();
+//        File file = new File(classLoader.getResource("persondata.csv").getFile());
+//        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
         String line= null;
         int linenumber = 0;
-        while ((line = bufferedReader.readLine()) != null && !line.isEmpty()) {
+        while ((line = bufferedReader.readLine()) != null && !line.trim().equals("")) {
             linenumber++;
             String[] fields = line.split(",");
             String lastname = fields[0].trim();
@@ -103,9 +113,17 @@ public class PersonRepositoryImpl implements PersonRepository {
 
     private void persistEntity(PersonEntity personEntity) throws FileNotFoundException, IOException{
 
-            ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource("persondata.csv").getPath());
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file,true));
+        //gets project directory
+        String projectPath = System.getProperty("user.dir");
+        int lastSlash = projectPath.lastIndexOf('\\');
+        String filePath= projectPath.substring(0,lastSlash+1);
+        //writes to project directory
+        File file = new File(filePath + "persondata.csv");
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file,true));
+
+//            ClassLoader classLoader = getClass().getClassLoader();
+//            File file = new File(classLoader.getResource("persondata.csv").getPath());
+//            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file,true));
         try{
             bufferedWriter.append("\n");
             bufferedWriter.append(personEntity.getLastname());
