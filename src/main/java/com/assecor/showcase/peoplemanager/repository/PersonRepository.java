@@ -9,9 +9,13 @@ import java.util.List;
 public interface PersonRepository {
 
     void readAll() throws FileNotFoundException, IOException;
+
     List<PersonEntity> findAll();
+
     PersonEntity findPerson(int id);
+
     List<PersonEntity> findPersonByColor(String colorName);
-    void add(PersonEntity personEntity) ;
+
+    void add(PersonEntity personEntity);
 
 }

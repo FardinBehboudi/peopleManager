@@ -1,8 +1,7 @@
 package com.assecor.showcase.peoplemanager.exception;
 
 
-
-public class PersonNotFoundException extends Exception{
+public class PersonNotFoundException extends Exception {
 
 
     public PersonNotFoundException(Throwable cause) {

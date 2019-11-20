@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component;
 public class StartupHook implements CommandLineRunner {
 
     @Autowired
-    @Qualifier(value = "personDBRepository")
+    @Qualifier(value = "personFileRepository")
     private PersonRepository personRepository;
 
     @Override
     public void run(String... args) throws Exception {
 
-      personRepository.readAll();
+        personRepository.readAll();
 
     }
 }

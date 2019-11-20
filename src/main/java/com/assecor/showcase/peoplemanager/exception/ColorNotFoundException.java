@@ -1,6 +1,6 @@
 package com.assecor.showcase.peoplemanager.exception;
 
-public class ColorNotFoundException extends Exception{
+public class ColorNotFoundException extends Exception {
     public ColorNotFoundException() {
     }
 

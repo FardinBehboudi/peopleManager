@@ -5,13 +5,11 @@ import com.assecor.showcase.peoplemanager.exception.PersonNotFoundException;
 import com.assecor.showcase.peoplemanager.model.Color;
 import com.assecor.showcase.peoplemanager.model.PersonEntity;
 import org.hamcrest.Matchers;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.regex.Matcher;
 
 public class PersonServiceTest extends IntegrationBaseTests {
 

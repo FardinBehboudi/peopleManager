@@ -18,15 +18,17 @@ public class PersonRepositoryImpl implements PersonRepository {
 
 
     @Override
-    public void readAll() throws FileNotFoundException, IOException {
+    public void readAll() throws IOException {
         personEntities = new ArrayList<>();
 
         //gets project directory
         String projectPath = System.getProperty("user.dir");
         int lastSlash = projectPath.lastIndexOf('\\');
         String filePath = projectPath.substring(0, lastSlash + 1);
+        String fileName = "persondata.csv";
         //open files from project directory
-        File file = new File(filePath + "persondata.csv");
+        File file = new File(filePath + fileName);
+        file.createNewFile();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
 
@@ -103,7 +105,7 @@ public class PersonRepositoryImpl implements PersonRepository {
 
     }
 
-    private void persistEntity(PersonEntity personEntity) throws FileNotFoundException, IOException {
+    private void persistEntity(PersonEntity personEntity) throws IOException {
 
         //gets project directory
         String projectPath = System.getProperty("user.dir");
