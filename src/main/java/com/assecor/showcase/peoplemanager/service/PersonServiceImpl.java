@@ -8,6 +8,7 @@ import com.assecor.showcase.peoplemanager.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public class PersonServiceImpl implements PersonService {
 
     @Autowired
-    @Qualifier(value = "personFileRepository")
+    @Qualifier(value = "personDBRepository")
     private PersonRepository personRepository;
 
     @Override
@@ -25,12 +26,13 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public PersonEntity findPerson(int id) throws PersonNotFoundException {
         try {
             return personRepository.findPerson(id);
         }
         catch (IllegalArgumentException ex){
-            throw new PersonNotFoundException(ex.getCause());
+            throw new PersonNotFoundException(ex.getMessage());
 
         }
     }
@@ -41,12 +43,13 @@ public class PersonServiceImpl implements PersonService {
             return personRepository.findPersonByColor(color);
         }
         catch (IllegalArgumentException ex){
-            throw new ColorNotFoundException(ex.getCause());
+            throw new ColorNotFoundException(ex.getMessage());
 
         }
     }
 
     @Override
+    @Transactional
     public void add(PersonEntity personEntity)  {  personRepository.add(personEntity);}
 
 

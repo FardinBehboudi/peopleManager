@@ -1,18 +1,20 @@
 package com.assecor.showcase.peoplemanager.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "people")
 public class PersonEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String lastname;
     private String zipcode;
     private String city;
+    @Enumerated(value = EnumType.STRING)
     private Color color;
 
 

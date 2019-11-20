@@ -31,7 +31,7 @@ public class PersonController {
         try {
             return new ResponseEntity<>(personService.findPerson(id),HttpStatus.OK);
         } catch(PersonNotFoundException ex){
-            return new ResponseEntity<>("Person Not Found",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
         }
     }
 
@@ -40,7 +40,7 @@ public class PersonController {
         try {
             return new ResponseEntity<>(personService.findPersonByColor(color),HttpStatus.OK);
         } catch(ColorNotFoundException ex){
-            return new ResponseEntity<>("Color Not Found",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
         }
 
     }

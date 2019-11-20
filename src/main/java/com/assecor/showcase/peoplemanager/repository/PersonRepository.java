@@ -11,7 +11,7 @@ public interface PersonRepository {
     void readAll() throws FileNotFoundException, IOException;
     List<PersonEntity> findAll();
     PersonEntity findPerson(int id);
-    List<PersonEntity> findPersonByColor(String color);
+    List<PersonEntity> findPersonByColor(String colorName);
     void add(PersonEntity personEntity) ;
 
 }
