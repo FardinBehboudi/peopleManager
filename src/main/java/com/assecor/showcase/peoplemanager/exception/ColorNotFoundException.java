@@ -1,5 +1,8 @@
 package com.assecor.showcase.peoplemanager.exception;
 
+/**
+ * @author F_Behboudi@hotmail.com
+ */
 public class ColorNotFoundException extends Exception {
     public ColorNotFoundException() {
     }

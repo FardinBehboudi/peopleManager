@@ -1,6 +1,8 @@
 package com.assecor.showcase.peoplemanager.exception;
 
-
+/**
+ * @author F_Behboudi@hotmail.com
+ */
 public class PersonNotFoundException extends Exception {
 
 

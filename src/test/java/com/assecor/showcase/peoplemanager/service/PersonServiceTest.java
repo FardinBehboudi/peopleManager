@@ -11,21 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+/**
+ * @author F_Behboudi@hotmail.com
+ */
 public class PersonServiceTest extends IntegrationBaseTests {
 
     @Autowired
-    private PersonService classUndreTest;
+    private PersonService classUnderTest;
 
-    //Testcase Convention name: unitOfWork_StateUnderTest_ExpectedResult
     @Test
-    public void findAll__ReturnAllPeople(){
+    public void findAll__ReturnAllPeople() {
 
         //Arrange
         String expectedFirstName = "Hans";
 
         //Act
-        //Class under test should be named classUndreTest!
-        List<PersonEntity> personEntities = classUndreTest.findAll();
+        List<PersonEntity> personEntities = classUnderTest.findAll();
 
         //Assert
         Assert.assertNotNull(personEntities);
@@ -45,7 +46,7 @@ public class PersonServiceTest extends IntegrationBaseTests {
         Color expectedColor = Color.GREEN;
 
         //Act
-        PersonEntity person = classUndreTest.findPerson(personId);
+        PersonEntity person = classUnderTest.findPerson(personId);
 
         //Assert
         Assert.assertNotNull(person);
@@ -66,7 +67,7 @@ public class PersonServiceTest extends IntegrationBaseTests {
         int nonExistingPersonId = Integer.MAX_VALUE;
 
         //Act
-        classUndreTest.findPerson(nonExistingPersonId);
+        classUnderTest.findPerson(nonExistingPersonId);
 
     }
 

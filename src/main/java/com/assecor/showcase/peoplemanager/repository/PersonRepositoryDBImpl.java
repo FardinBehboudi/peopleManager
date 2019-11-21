@@ -8,12 +8,14 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
-
+/**
+ * @author F_Behboudi@hotmail.com
+ * repository to read and write from/to database.
+ */
 @Component(value = "personDBRepository")
 public class PersonRepositoryDBImpl implements PersonRepository {
 
@@ -22,23 +24,33 @@ public class PersonRepositoryDBImpl implements PersonRepository {
     @Autowired
     private EntityManager entityManager;
 
+    /**
+     * can be implemented, IF we need to populate the database table from a file or another source for the first time.
+     *
+     * @throws IOException
+     */
     @Override
-    public void readAll() throws FileNotFoundException, IOException {
-        //TODO
-
+    public void readAll() throws IOException {
     }
 
+    /**
+     * @return list of people
+     */
     @Override
     public List<PersonEntity> findAll() {
-        //jpql
         TypedQuery<PersonEntity> query = entityManager.createQuery("SELECT c FROM PersonEntity c", PersonEntity.class);
         List<PersonEntity> results = query.getResultList();
         return results;
     }
 
+    /**
+     * find person with given ID in database and in people table
+     *
+     * @param id of the person
+     * @return an PersonEntity object
+     */
     @Override
     public PersonEntity findPerson(int id) {
-        //jpql
         try {
             TypedQuery<PersonEntity> query = entityManager.createQuery("SELECT c FROM PersonEntity c where c.id = ?1", PersonEntity.class);
             query.setParameter(1, id);
@@ -51,9 +63,14 @@ public class PersonRepositoryDBImpl implements PersonRepository {
         }
     }
 
+    /**
+     * searches amonge records in database to find people with the mentioned favorite color
+     *
+     * @param colorName should be amonge the Enum elemnts
+     * @return list of people and empty list ,if there is none
+     */
     @Override
     public List<PersonEntity> findPersonByColor(String colorName) {
-        //jpql
         try {
             Color color = Color.valueOf(colorName.toUpperCase());
             TypedQuery<PersonEntity> query = entityManager.createQuery("SELECT c FROM PersonEntity c where c.color = ?1", PersonEntity.class);
@@ -67,6 +84,11 @@ public class PersonRepositoryDBImpl implements PersonRepository {
         }
     }
 
+    /**
+     * adds posted users to database
+     *
+     * @param personEntity
+     */
     @Override
     public void add(PersonEntity personEntity) {
         entityManager.persist(personEntity);

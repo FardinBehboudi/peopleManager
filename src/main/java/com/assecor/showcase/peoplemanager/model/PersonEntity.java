@@ -3,6 +3,9 @@ package com.assecor.showcase.peoplemanager.model;
 
 import javax.persistence.*;
 
+/**
+ * @author F_Behboudi@hotmail.com
+ */
 @Entity
 @Table(name = "people")
 public class PersonEntity {

@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author F_Behboudi@hotmail.com
+ * this class implements Spring commandLineRunner to be called at application start up.
+ */
 @Component
 public class StartupHook implements CommandLineRunner {
 

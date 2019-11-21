@@ -2,7 +2,9 @@ package com.assecor.showcase.peoplemanager.model;
 
 import java.util.logging.Logger;
 
-
+/**
+ * @author F_Behboudi@hotmail.com
+ */
 public enum Color {
     BLUE(1),
     GREEN(2),

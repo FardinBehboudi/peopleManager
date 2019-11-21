@@ -10,6 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * @author F_Behboudi@hotmail.com
+ * reads the list of persons from a given file and adds them to PersonEntity Object, and exposes them to Rest Interface.
+ * writes new peoples records to the same file.
+ * "persondata.csv" is list of people. this file will be cached while starting the application.
+ */
 @Component(value = "personFileRepository")
 public class PersonRepositoryImpl implements PersonRepository {
 
@@ -17,6 +23,15 @@ public class PersonRepositoryImpl implements PersonRepository {
     private static final Logger logger = Logger.getLogger(PersonRepositoryImpl.class.getName());
 
 
+    /**
+     * Repository to read and write from/to File.
+     * while starting the application will look for "persondata.csv" on the parent folder of project.
+     * the file is placed there because we need to read and write at the same time and it was not possible to do it resource path.
+     * if the project exist,data from file will be fetched and if there is no such a file a new file will be created.
+     * there is no change in file, all the adjustments are handled in code.
+     *
+     * @throws IOException
+     */
     @Override
     public void readAll() throws IOException {
         personEntities = new ArrayList<>();
@@ -51,11 +66,20 @@ public class PersonRepositoryImpl implements PersonRepository {
 
     }
 
+    /**
+     * @return list of peoples
+     */
     @Override
     public List<PersonEntity> findAll() {
         return personEntities;
     }
 
+    /**
+     * searches for person by its ID
+     *
+     * @param id
+     * @return a PersonEntity Object
+     */
     @Override
     public PersonEntity findPerson(int id) {
         for (PersonEntity personEntity : personEntities) {
@@ -69,6 +93,10 @@ public class PersonRepositoryImpl implements PersonRepository {
 
     }
 
+    /**
+     * @param colorName
+     * @return all people with the mentioned Color
+     */
     @Override
     public List<PersonEntity> findPersonByColor(String colorName) {
         List<PersonEntity> personEntityList = new ArrayList<>();
@@ -89,6 +117,12 @@ public class PersonRepositoryImpl implements PersonRepository {
 
     }
 
+    /**
+     * adds new person to file.
+     * person ID is defined based on the line number of each record
+     *
+     * @param personEntity
+     */
     @Override
     public void add(PersonEntity personEntity) {
         int id = personEntities.size() + 1;
@@ -105,6 +139,12 @@ public class PersonRepositoryImpl implements PersonRepository {
 
     }
 
+    /**
+     * persists given Person Entity to file , fue to keeping consistency of file Zipcode and City are merged again.
+     *
+     * @param personEntity
+     * @throws IOException
+     */
     private void persistEntity(PersonEntity personEntity) throws IOException {
 
         //gets project directory
